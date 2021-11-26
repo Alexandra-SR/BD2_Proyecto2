@@ -52,15 +52,18 @@ def tfidf(tf):
                 lista[k] = str(lista[k]) + "," + str(archivos[it]) + ":" + str(wtfidf)             
             else:
                 lista[k] = str(archivos[it]) + ":" + str(wtfidf)
-        it += 1
-        
-    it1 = 0
-    for i in lista:
-        print(i, lista[i])
-        print('\n')
-        it1 += 1
-        if it1 == 5: break
-    return lista
+        it += 1            
+        if(it % 5 == 0):
+            writeblock(lista, it/5)
+            lista = {}
+    
+    writeblock(lista, math.ceil(it/5))
+
+def writeblock(lista, c):
+    nombre = "index" + str(int(c)) + ".txt"
+    with open(nombre, 'w') as data:
+        for k, v in lista.items():
+            data.write(str(k) + ': '+ str(v) + '\n')
 
 def df(word, lista):
     c = 0
@@ -82,6 +85,7 @@ def readFile(name):
         if word not in stoplist:
             ans.append(word)
     return Counter(ans)
+
 
 print(json_tweets_to_dic())
 
