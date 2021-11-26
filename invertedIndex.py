@@ -1,3 +1,4 @@
+import nltk
 from nltk.stem.snowball import SnowballStemmer
 
 def addtopathfile(filename):
