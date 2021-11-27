@@ -51,9 +51,9 @@ def tfidf(tf):
         for k in i:
             wtfidf = math.log(1 + i[k]) * math.log(len(tf)/df(k, tf))
             if k in lista:
-                lista[k] = str(lista[k]) + "," + str(archivos[it]) + ":" + str(wtfidf)             
+                lista[k] = str(lista[k]) + ";" + str(archivos[it]) + "," + str(wtfidf)             
             else:
-                lista[k] = str(archivos[it]) + ":" + str(wtfidf)
+                lista[k] = str(archivos[it]) + "," + str(wtfidf)
         it += 1            
         if(it % 5 == 0):
             writeblock(lista, it/5)
@@ -142,7 +142,56 @@ def readFile(name):
             ans.append(word)
     return Counter(ans)
 
-#print("\u0307")
-json_tweets_to_dic()
+#json_tweets_to_dic()
 
+def parser(line):
+    dic = {}
+    i = line.split(':')
+    dic[i[0]] = i[1]
+    return dic
 
+ind = {}  
+
+def df_ind(word, ind):
+    line = ind[word]
+    line.split(';')
+    return len(line)
+
+def readInverted():
+    path = "index"
+    cont = 1
+    while(True):
+        pat = path + str(cont)+".txt"
+        print(pat)
+        if os.path.exists(pat):
+            with open(pat, 'r', encoding="ISO-8859-1") as f:
+                for index, line in enumerate(f):
+                    ind.update(parser(line))        
+            cont += 1
+        else:
+            print("no")
+            break
+    return ind
+    
+    
+algo = 'rt: tweets_2018-08-07.json:0.0,tweets_2018-08-08.json:0.0,tweets_2018-08-09.json:0.0,tweets_2018-08-10.json:0.0,tweets_2018-08-11.json:0.0'
+def search(query, k):
+    tf = readFile(query)
+    dic = {}
+    inverted = readInverted()
+    scores = [0]*len(archivos)
+    lenght1 = [0]*len(archivos)
+    lenght2 = 0
+    for i in tf:
+        wtfidf = math.log(1 + tf[i]) * math.log(len(archivos)/df_ind(i, inverted))
+        dic[i] = wtfidf
+        lenght2 = lenght2 + wtfidf**2
+        values = inverted[i].split(';')
+        for j in len(values):
+            lenght1[j] = wtfidf
+    lenght2 = lenght2**0.5
+
+    return dic
+
+#json_tweets_to_dic()
+print(df_ind())

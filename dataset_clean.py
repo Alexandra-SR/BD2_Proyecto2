@@ -22,3 +22,6 @@ def gerenate_clean_tweets():
                             raise
                 with open(file, "w", encoding='utf-8') as clean_file:
                     clean_file.write(json.dumps(result)) 
+
+
+    
