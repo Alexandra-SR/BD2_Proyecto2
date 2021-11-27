@@ -45,9 +45,9 @@
 ## Descripción de las técnicas 
 
 - **Preprocesamiento:** 
-  o Tokenization 
-  o Filtrar Stopwords 
-  o Reducción de palabras (Stemming) 
+  - Tokenization 
+  - Filtrar Stopwords 
+  - Reducción de palabras (Stemming) 
 - **Construcción del Índice**
   o Estructurar el índice invertido para guardar los pesos TF-IDF.  
   o Calcular  una  sola  vez  la  longitud  de  cada  documento  (norma)  y  guardarlo  para  ser 
