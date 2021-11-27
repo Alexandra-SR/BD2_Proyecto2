@@ -49,15 +49,15 @@
   - Filtrar Stopwords 
   - Reducción de palabras (Stemming) 
 - **Construcción del Índice**
-  o Estructurar el índice invertido para guardar los pesos TF-IDF.  
-  o Calcular  una  sola  vez  la  longitud  de  cada  documento  (norma)  y  guardarlo  para  ser 
+  - Estructurar el índice invertido para guardar los pesos TF-IDF.  
+  - Calcular  una  sola  vez  la  longitud  de  cada  documento  (norma)  y  guardarlo  para  ser 
   utilizado al momento de aplicar la similitud de coseno. 
-  o Construcción del índice en memoria secundaria para grandes colecciones de datos.   
+  - Construcción del índice en memoria secundaria para grandes colecciones de datos.   
 - **Consulta** 
-  o La consulta es una frase en lenguaje natural.  
-  o El scoring se obtiene aplicando la similitud de coseno sobre el índice invertido en 
+  - La consulta es una frase en lenguaje natural.  
+  - El scoring se obtiene aplicando la similitud de coseno sobre el índice invertido en 
   memoria secundaria. 
-  o La función de recuperac
+  - La función de recuperac
   ión debe retornar una lista ordenada de documentos que se 
   aproximen a la consulta. 
 
