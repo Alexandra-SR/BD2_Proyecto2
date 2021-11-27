@@ -3,9 +3,9 @@
 
 ## Integrantes ✒️
 
-- Juan Pablo Lozada [IWeseI] Participación: 100%
-- Alexandra Shulca [Alexandra-SR] Participación: 100%
-- Alex Loja Zumaeta [aljozu] Participación: 100%
+- Juan Pablo Lozada[IWeseI] Participación: 100%
+- Alexandra Shulca[Alexandra-SR] Participación: 100%
+- Alex Loja Zumaeta[aljozu] Participación: 100%
 
 ## Profesor 🦾
 
@@ -39,9 +39,11 @@
  
 ````
 
-
-**_Resultados esperados:_** Se espera poder hacer inserción de registros, búsqueda por rango, búsqueda específica y eliminación de acuerdo al id.
-
+**_Resultados esperados:_** 
+Probar  el  desempeño  del  índice  invertido,  mediante una plataforma web (frontend y backend)  que permita interactuar con las principales operaciones del índice invertido:  
+- Carga e indexación de documentos en tiempo real. 
+- Búsqueda textual relacionado a ciertos temas de interés. 
+- Presentación de resultados de búsqueda de forma amigable e intuitiva.  
 
 ## Comenzando 🚀
 
@@ -84,9 +86,10 @@
   ión debe retornar una lista ordenada de documentos que se 
   aproximen a la consulta. 
 
-###  SEQUENTIAL FILE  💯
 
-**_Sequential file_**: En este método organizamos los registros de acuerdo a un valor de sus campos, para este caso usaremos el campo **Id** como key.
+###  ÍNDICE INVERTIDO  💯
+
+**_Índice Invertido_**: En este método organizamos los registros de acuerdo a un valor de sus campos, para este caso usaremos el campo **Id** como key.
 
 - **Búsqueda:**
 
@@ -182,30 +185,7 @@
 
 #### Búsqueda específica
 ````c++
- vector<Car> search(int key) {
-    Car record;
-    int totalRecords, deleteNext;
-    vector<Car> result;
-    fstream file; 
 
-    string bucketName= getBucket(key); 
-    string bucket = bucketName +".dat";
-    
-    file.open(bucket, ios::binary | ios::out | ios::in );
-    file.read((char *) &totalRecords, sizeof(int));
-    file.read((char *) &deleteNext, sizeof(int));
-    for (unsigned int i = 0; i < totalRecords; i++) {
-      file.read((char *) &record, sizeof(record));
-    // -1 means that the record  is not deleted
-      if (record.id == key && record.deleteNext == -2)
-        {result.push_back(record);}
-    }
-    if (result.empty()){
-      cerr<<"Key not found in search "<<endl;
-    }
-    file.close();
-    return result;
-  }
 ````
 
 - **Inserción:**
@@ -263,18 +243,11 @@
 
 ## Resultados Experimentales  
   
-  ***Sequential File***  
+  ***Índice Invertido***  
   
   ![Tiempo vs Operación por registro](/Imagenes/SF_ExecutionTimes.png)  
   - Podemos observar como los tiempos de inserción aumentan cada cierta cantidad de operaciones, ya que al acabarse el espacio auxiliar los registros son escritos en memoria secundaria y ordenados de acuerdo a su key.
   - Los tiempos de búsqueda y eliminación solo aumentan cuando el registro se encuentra en el archivo auxiliar, caso contrario su tiempo de ejecución se mantiene constante.
-
-  ***Extendible Hashing***
-  
-  ![Tiempo vs Operación por registro](/Imagenes/EH_ExecutionTimes.png)
-  - Los tiempos de búsqueda son constantes en cualquier moment.
-  - Los picos de tiempo en insertar se dan porque en algún momento se necesita hacer split de algun bucket.
-  - Los tiempos altos en eliminar se dan porque se necesita hacer merge entre dos buckets con cantidad baja de registros. 
 
 
 ## Evidencias 🚀
