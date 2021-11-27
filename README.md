@@ -33,13 +33,12 @@
 ### Pre-requisitos 📋
 * [Python](https://www.python.org/downloads/) 
 #### Librerías
-* [Json]()
-* [nltk]
-* [collections]
-* [emoji]
-* [collections]
-* [math]
-* [re]
+* [Json](https://docs.python.org/3/library/json.html)
+* [nltk](https://www.nltk.org/)
+* [collections](https://docs.python.org/3/library/collections.html)
+* [emoji](https://pypi.org/project/emoji/)
+* [math](https://docs.python.org/3/library/math.html)
+* [re](https://docs.python.org/3/library/re.html)
 
 
 ### Despliegue 📦
