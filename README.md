@@ -31,7 +31,16 @@
 ## Comenzando 🚀
 
 ### Pre-requisitos 📋
-* [C++ 17](https://nuwen.net/mingw.html) 
+* [Python](https://www.python.org/downloads/) 
+#### Librerías
+* [Json]()
+* [nltk]
+* [collections]
+* [emoji]
+* [collections]
+* [math]
+* [re]
+
 
 ### Despliegue 📦
 
