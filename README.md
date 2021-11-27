@@ -19,10 +19,25 @@
 
 **_Objetivo:_**  Entender y aplicar los algoritmos de búsqueda y recuperación de información basado en el contenido. En este proyecto nos enfocaremos en la construcción óptima de un _Índice Invertido_. En este caso usaremos un dataset de tweets, que nos permitirá encontrar los tweets más relevantes dado un término de búsqueda. 
 
-**_Descripción del dominio:_** Usaremos una base de datos que cuenta con la información de [carros usados de la marca Audi](https://www.kaggle.com/mysarahmadbhat/audi-used-car-listings). Existen más de 10 mil registros y por cada uno tenemos la siguiente información:
+**_Descripción del dominio:_** Usaremos una colección  de  aproximadamente [20 mil  tweets  de  Twitter] (https://onedrive.live.com/?cid=0c2923df9f1f816f&id=C2923DF9F1F816F%2150804&ithint=folder&authkey=!ANNEKv7tNdlSSQk). En donde el diccionario de términos se construyó usando el contenido del atributo “text”, y el el Id del tweet.  Existen más de 10 mil registros y por cada uno tenemos la siguiente información:
 
-- **Id**: Número de identificación.
-- **Model**: Modelo de Audi.
+- **Id**: Número de identificación del id.
+- **Date**:  Fecha de de publicación del tweet.
+- **Text**: Contenido del tweet.
+- **User_id**: Id del usuario que escribió el tweet.
+- **User_name**: Nombre de usuario de la persona que tweeteo.
+- **Location**: Desde donde fue enviado el tweet.
+- **Retweeted** : Valor booleano para para identificar si fue retweeteado o no.
+- **RT_text**: Contenido del retweet.
+- **RT_user_id**: Id del usuario que retweeteó el tweet.
+- **RT_user_name** : Nombre de usuario de la persona que retweeteó.
+
+- **Ejemplo**:
+
+````json
+{"id": 1026814183042686976,"date": "Tue Aug 07 12:55:53 +0000 2018", "text": "RT @de_patty: Asuuuuuuu..  @Renzo_Reggiardo me da mala espina...su pasado fujimorísta qué miedo!!!y @luchocastanedap hijo de corrupto que s…", "user_id": 544008122,"user_name": "@CARLOSPUEMAPE1", "location": {}, "retweeted": true,"RT_text": "Asuuuuuuu..  @Renzo_Reggiardo me da mala espina...su pasado fujimorísta qué miedo!!!y @luchocastanedap hijo de corrupto que secunda lo del padre NI HABLAR! Más comunicore Plop!lideran las preferencias para la alcaldía de Lima, según Ipsos | RPP Noticias https://t.co/w5TnU0Dmwq", "RT_user_id": 302995560, "RT_user_name": "@de_patty"}
+ 
+````
 
 
 **_Resultados esperados:_** Se espera poder hacer inserción de registros, búsqueda por rango, búsqueda específica y eliminación de acuerdo al id.
