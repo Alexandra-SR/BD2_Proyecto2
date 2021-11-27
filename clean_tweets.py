@@ -12,7 +12,6 @@ from collections import OrderedDict
 input_directory = "dataset_clean"
 curpath = os.path.abspath(os.curdir)
 punc = [ "¡", "«", "»", ".", ",", ";", "(", ")", ":", "@", "RT", "#", "|", "¿", "?", "!", "https", "$", "%", "&", "'", "''", "..", "...", '\'', '\"' ]
-#punc = '''!()-[]{};:'"\,<>./?@#$%^&*_~«»'''
 with open('stoplist.txt') as file:
     stoplist = [line.lower().strip() for line in file]
 stoplist += ["«", "»", ".", ",", ";", "(", ")", ":", "@", "RT", "#", "|", "?", "!", "https", "$", "%", "&", "'", "''", "..", "...", '\'', '\"' ]
@@ -34,15 +33,12 @@ def json_tweets_to_dic():
     for filename in archivos:
         lista = []
         if filename.endswith(".json") :
-            print(filename, '\n') 
             with open(input_directory + '\\' + filename, 'r', encoding='utf-8') as all_tweets:
                 all_tweets_dictionary = json.load(all_tweets)
                 for tweet in all_tweets_dictionary:
                     temp = readFile(all_tweets_dictionary[tweet])
-                    #print(temp)
                     lista.append(temp)
                 tf.append(merge(lista))
-   
     tfidf(tf)
   
       
@@ -137,13 +133,11 @@ def readFile(name):
     stemmer = SnowballStemmer('spanish')
     palabras = nltk.word_tokenize(remove_URL(signosp(strip_emoji(remove_emojis(name))).lower()))
     for token in palabras:
-        #w1 = signosp(token)
         word = stemmer.stem(token)
         if word not in stoplist:
             ans.append(word)
     return Counter(ans)
 
-#json_tweets_to_dic()
 
 def parser(line):
     i = line.split(':')
@@ -161,7 +155,6 @@ def readInverted():
     cont = 1
     while(True):
         pat = path + str(cont)+".txt"
-        print(pat)
         if os.path.exists(pat):
             with open(pat, 'r', encoding="ISO-8859-1") as f:
                 for index, line in enumerate(f):
@@ -172,16 +165,11 @@ def readInverted():
                         ind[pair[0]] = str(pair[1])
             cont += 1
         else:
-            print("no")
             break
     return ind
     
-    
-query = 'Hola que tal me llamo Alex y quiero jugar lol'
-
 def search(query, k):
     tf = readFile(query)
-    print(tf)
     dic = {}
     inverted = readInverted()
     scores = {}
@@ -209,7 +197,30 @@ def search(query, k):
     orderedDic = sorted(scores.items(), key=lambda it: it[1], reverse=True)
     return orderedDic[:k]
 
-#json_tweets_to_dic()
-print(search(query, 5))
-#for i in search(query, 2):
-#   print(i, '\n')
+def readFile2(name):
+    ans = []
+    palabras = nltk.word_tokenize(remove_URL(signosp(strip_emoji(remove_emojis(name))).lower()))
+    for token in palabras:
+        if token not in stoplist:
+            ans.append(token)
+    return ans
+
+def find_tweetids(query, k):
+    documentos = search(query, k)
+    palabras = readFile2(query)
+    lista = []
+    ct = 0
+    for i in documentos:      
+        with open(input_directory + '\\' + i[0], 'r', encoding='utf-8') as all_tweets:
+            all_tweets_dictionary = json.load(all_tweets)
+            for w in palabras:
+                for tweet in all_tweets_dictionary:               
+                    temp = all_tweets_dictionary[tweet]            
+                    if temp.find(w) != -1:
+                        lista.append((tweet, all_tweets_dictionary[tweet]))
+                        ct += 1                   
+                    if ct == k: break 
+                if ct == k: break
+        if ct == k: break    
+    return lista  
+           

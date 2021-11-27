@@ -1,44 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Resultados</title>
-  <link rel="stylesheet"  href="../static/css/style_resultados.css" >
-</head>
+  <head>
+    <meta charset="utf-8" />
+    <title>Resultados</title>
+    <link rel="stylesheet" href="../static/css/style_resultados.css" />
+  </head>
 
-<br>
-<br>
-<br>
-<h1>Resultados de la busqueda </h1>
-<br>
-<div class="table-wrapper">
+  <br />
+  <br />
+  <br />
+  <h1>Resultados de la busqueda</h1>
+  <br />
+  <div class="table-wrapper">
     <table class="fl-table">
-        <thead>
+      <thead>
         <tr>
-            <th>  Documento</th>
-            <th> Tweet </th>
+          <th>Documento</th>
+          <th>Tweet</th>
         </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Content 1</td>
-            <td>Content 1</td>
-        </tr>
-        <tr>
-            <td>Content 2</td>
-            <td>Content 2</td>
-        </tr>
-        <tr>
-            <td>Content 5</td>
-            <td>Content 5</td>
+      </thead>
+      <tbody>
+        <ul class="list-group">
+          {% for tweet, docid in mensaje %}
+          <tr>
+            <td>{{tweet}}</td>
+            <td>{{docid}}</td>
+          </tr>
+          {% endfor %}
+        </ul>
+      </tbody>
 
-        </tr>
-        <tr>
-            <td>Content 6</td>
-            <td>Content 6</td>
-
-        </tr>
-
-        <tbody>
+      <tbody></tbody>
     </table>
-</div>
+  </div>
+</html>
