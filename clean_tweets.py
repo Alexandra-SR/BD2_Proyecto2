@@ -6,6 +6,8 @@ from collections import Counter
 import math
 import re
 import emoji
+import operator
+from collections import OrderedDict
 
 input_directory = "dataset_clean"
 curpath = os.path.abspath(os.curdir)
@@ -65,8 +67,7 @@ def writeblock(lista, c):
     nombre = "index" + str(int(c)) + ".txt"
     with open(nombre, 'a', encoding='utf-8') as data:
         for k in lista:
-            #print(k + ': '+ lista[k] + '\n')
-            data.write(k + ': '+ lista[k] + '\n')
+            data.write(k + ':'+ lista[k] + '\n')
                 
 
 def df(word, lista):
@@ -145,16 +146,14 @@ def readFile(name):
 #json_tweets_to_dic()
 
 def parser(line):
-    dic = {}
     i = line.split(':')
-    dic[i[0]] = i[1]
-    return dic
+    return i
 
 ind = {}  
 
 def df_ind(word, ind):
     line = ind[word]
-    line.split(';')
+    line = line.split(';')
     return len(line)
 
 def readInverted():
@@ -166,7 +165,11 @@ def readInverted():
         if os.path.exists(pat):
             with open(pat, 'r', encoding="ISO-8859-1") as f:
                 for index, line in enumerate(f):
-                    ind.update(parser(line))        
+                    pair = parser(line[:len(line)-2])
+                    if pair[0] in ind:
+                        ind[pair[0]] = str(ind[pair[0]]) + ";" + str(pair[1])          
+                    else:
+                        ind[pair[0]] = str(pair[1])
             cont += 1
         else:
             print("no")
@@ -174,24 +177,39 @@ def readInverted():
     return ind
     
     
-algo = 'rt: tweets_2018-08-07.json:0.0,tweets_2018-08-08.json:0.0,tweets_2018-08-09.json:0.0,tweets_2018-08-10.json:0.0,tweets_2018-08-11.json:0.0'
+query = 'Hola que tal me llamo Alex y quiero jugar lol'
+
 def search(query, k):
     tf = readFile(query)
+    print(tf)
     dic = {}
     inverted = readInverted()
-    scores = [0]*len(archivos)
-    lenght1 = [0]*len(archivos)
+    scores = {}
+    lenght1 = {}
+    for i in archivos:
+        scores[i] = 0
+        lenght1[i] = 0
     lenght2 = 0
     for i in tf:
         wtfidf = math.log(1 + tf[i]) * math.log(len(archivos)/df_ind(i, inverted))
         dic[i] = wtfidf
         lenght2 = lenght2 + wtfidf**2
         values = inverted[i].split(';')
-        for j in len(values):
-            lenght1[j] = wtfidf
+        for j in values:
+            j = j.split(',')
+            lenght1[j[0]] = lenght1[j[0]] + float(j[1])**2
+            scores[j[0]] = scores[j[0]] + float(j[1])*wtfidf
     lenght2 = lenght2**0.5
-
-    return dic
+    for i in lenght1:
+        if lenght1[i] != 0:
+            lenght1[i] = lenght1[i]**0.5
+    for i in scores:
+        if lenght1[i] != 0:
+            scores[i] = scores[i]/(lenght1[i]*lenght2)
+    orderedDic = sorted(scores.items(), key=lambda it: it[1], reverse=True)
+    return orderedDic[:k]
 
 #json_tweets_to_dic()
-print(df_ind())
+print(search(query, 5))
+#for i in search(query, 2):
+#   print(i, '\n')
