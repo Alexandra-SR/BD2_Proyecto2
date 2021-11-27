@@ -3,9 +3,9 @@
 
 ## Integrantes ✒️
 
-- Juan Pablo Lozada [IWeseI] Participación: 100%
-- Alexandra Shulca [Alexandra-SR] Participación: 100%
-- Alex Loja Zumaeta [aljozu] Participación: 100%
+- Juan Pablo Lozada[IWeseI] Participación: 100%
+- Alexandra Shulca[Alexandra-SR] Participación: 100%
+- Alex Loja Zumaeta[aljozu] Participación: 100%
 
 ## Profesor 🦾
 
@@ -17,21 +17,47 @@
 
 ## Introducción :dart:
 
-**_Objetivo:_** Implementar dos técnicas de organización de archivos que almacenen la información y permitan el manejo de los registros de manera eficaz. En este caso, nos permitirá encontrar los precios de venta y las características de determinados autos usados. Para lograr esto implementaremos _Sequential File y Extentible Hashing_.
+**_Objetivo:_**  Entender y aplicar los algoritmos de búsqueda y recuperación de información basado en el contenido. En este proyecto nos enfocaremos en la construcción óptima de un _Índice Invertido_. En este caso usaremos un dataset de tweets, que nos permitirá encontrar los tweets más relevantes dado un término de búsqueda. 
 
-**_Descripción del dominio:_** Usaremos una base de datos que cuenta con la información de [carros usados de la marca Audi](https://www.kaggle.com/mysarahmadbhat/audi-used-car-listings). Existen más de 10 mil registros y por cada uno tenemos la siguiente información:
+**_Descripción del dominio:_** Usaremos una colección  de  aproximadamente [20 mil  tweets  de  Twitter](https://onedrive.live.com/?cid=0c2923df9f1f816f&id=C2923DF9F1F816F%2150804&ithint=folder&authkey=!ANNEKv7tNdlSSQk). En donde el diccionario de términos se construyó usando el contenido del atributo “text”, y el el Id del tweet.  Existen más de 10 mil registros y por cada uno tenemos la siguiente información:
 
-- **Id**: Número de identificación.
-- **Model**: Modelo de Audi.
+- **Id**: Número de identificación del id.
+- **Date**:  Fecha de de publicación del tweet.
+- **Text**: Contenido del tweet.
+- **User_id**: Id del usuario que escribió el tweet.
+- **User_name**: Nombre de usuario de la persona que tweeteo.
+- **Location**: Desde donde fue enviado el tweet.
+- **Retweeted** : Valor booleano para para identificar si fue retweeteado o no.
+- **RT_text**: Contenido del retweet.
+- **RT_user_id**: Id del usuario que retweeteó el tweet.
+- **RT_user_name** : Nombre de usuario de la persona que retweeteó.
 
+- **Ejemplo**:
 
-**_Resultados esperados:_** Se espera poder hacer inserción de registros, búsqueda por rango, búsqueda específica y eliminación de acuerdo al id.
+````json
+{"id": 1026814183042686976,"date": "Tue Aug 07 12:55:53 +0000 2018", "text": "RT @de_patty: Asuuuuuuu..  @Renzo_Reggiardo me da mala espina...su pasado fujimorísta qué miedo!!!y @luchocastanedap hijo de corrupto que s…", "user_id": 544008122,"user_name": "@CARLOSPUEMAPE1", "location": {}, "retweeted": true,"RT_text": "Asuuuuuuu..  @Renzo_Reggiardo me da mala espina...su pasado fujimorísta qué miedo!!!y @luchocastanedap hijo de corrupto que secunda lo del padre NI HABLAR! Más comunicore Plop!lideran las preferencias para la alcaldía de Lima, según Ipsos | RPP Noticias https://t.co/w5TnU0Dmwq", "RT_user_id": 302995560, "RT_user_name": "@de_patty"}
+ 
+````
 
+**_Resultados esperados:_** 
+Probar  el  desempeño  del  índice  invertido,  mediante una plataforma web (frontend y backend)  que permita interactuar con las principales operaciones del índice invertido:  
+- Carga e indexación de documentos en tiempo real. 
+- Búsqueda textual relacionado a ciertos temas de interés. 
+- Presentación de resultados de búsqueda de forma amigable e intuitiva.  
 
 ## Comenzando 🚀
 
 ### Pre-requisitos 📋
-* [C++ 17](https://nuwen.net/mingw.html) 
+* [Python](https://www.python.org/downloads/) 
+#### Librerías
+* [Json](https://docs.python.org/3/library/json.html)
+* [flask](https://flask.palletsprojects.com/en/2.0.x/)
+* [nltk](https://www.nltk.org/)
+* [collections](https://docs.python.org/3/library/collections.html)
+* [emoji](https://pypi.org/project/emoji/)
+* [math](https://docs.python.org/3/library/math.html)
+* [re](https://docs.python.org/3/library/re.html)
+
 
 ### Despliegue 📦
 
@@ -44,9 +70,27 @@
 
 ## Descripción de las técnicas 
 
-###  SEQUENTIAL FILE  💯
+- **Preprocesamiento:** 
+  - Tokenization 
+  - Filtrar Stopwords 
+  - Reducción de palabras (Stemming) 
+- **Construcción del Índice**
+  - Estructurar el índice invertido para guardar los pesos TF-IDF.  
+  - Calcular  una  sola  vez  la  longitud  de  cada  documento  (norma)  y  guardarlo  para  ser 
+  utilizado al momento de aplicar la similitud de coseno. 
+  - Construcción del índice en memoria secundaria para grandes colecciones de datos.   
+- **Consulta** 
+  - La consulta es una frase en lenguaje natural.  
+  - El scoring se obtiene aplicando la similitud de coseno sobre el índice invertido en 
+  memoria secundaria. 
+  - La función de recuperac
+  ión debe retornar una lista ordenada de documentos que se 
+  aproximen a la consulta. 
 
-**_Sequential file_**: En este método organizamos los registros de acuerdo a un valor de sus campos, para este caso usaremos el campo **Id** como key.
+
+###  ÍNDICE INVERTIDO  💯
+
+**_Índice Invertido_**: En este método organizamos los registros de acuerdo a un valor de sus campos, para este caso usaremos el campo **Id** como key.
 
 - **Búsqueda:**
 
@@ -142,30 +186,7 @@
 
 #### Búsqueda específica
 ````c++
- vector<Car> search(int key) {
-    Car record;
-    int totalRecords, deleteNext;
-    vector<Car> result;
-    fstream file; 
 
-    string bucketName= getBucket(key); 
-    string bucket = bucketName +".dat";
-    
-    file.open(bucket, ios::binary | ios::out | ios::in );
-    file.read((char *) &totalRecords, sizeof(int));
-    file.read((char *) &deleteNext, sizeof(int));
-    for (unsigned int i = 0; i < totalRecords; i++) {
-      file.read((char *) &record, sizeof(record));
-    // -1 means that the record  is not deleted
-      if (record.id == key && record.deleteNext == -2)
-        {result.push_back(record);}
-    }
-    if (result.empty()){
-      cerr<<"Key not found in search "<<endl;
-    }
-    file.close();
-    return result;
-  }
 ````
 
 - **Inserción:**
@@ -223,18 +244,11 @@
 
 ## Resultados Experimentales  
   
-  ***Sequential File***  
+  ***Índice Invertido***  
   
   ![Tiempo vs Operación por registro](/Imagenes/SF_ExecutionTimes.png)  
   - Podemos observar como los tiempos de inserción aumentan cada cierta cantidad de operaciones, ya que al acabarse el espacio auxiliar los registros son escritos en memoria secundaria y ordenados de acuerdo a su key.
   - Los tiempos de búsqueda y eliminación solo aumentan cuando el registro se encuentra en el archivo auxiliar, caso contrario su tiempo de ejecución se mantiene constante.
-
-  ***Extendible Hashing***
-  
-  ![Tiempo vs Operación por registro](/Imagenes/EH_ExecutionTimes.png)
-  - Los tiempos de búsqueda son constantes en cualquier moment.
-  - Los picos de tiempo en insertar se dan porque en algún momento se necesita hacer split de algun bucket.
-  - Los tiempos altos en eliminar se dan porque se necesita hacer merge entre dos buckets con cantidad baja de registros. 
 
 
 ## Evidencias 🚀
