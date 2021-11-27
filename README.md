@@ -51,6 +51,7 @@ Probar  el  desempeño  del  índice  invertido,  mediante una plataforma web (f
 * [Python](https://www.python.org/downloads/) 
 #### Librerías
 * [Json](https://docs.python.org/3/library/json.html)
+* [flask](https://flask.palletsprojects.com/en/2.0.x/)
 * [nltk](https://www.nltk.org/)
 * [collections](https://docs.python.org/3/library/collections.html)
 * [emoji](https://pypi.org/project/emoji/)
