@@ -19,7 +19,7 @@
 
 **_Objetivo:_**  Entender y aplicar los algoritmos de búsqueda y recuperación de información basado en el contenido. En este proyecto nos enfocaremos en la construcción óptima de un _Índice Invertido_. En este caso usaremos un dataset de tweets, que nos permitirá encontrar los tweets más relevantes dado un término de búsqueda. 
 
-**_Descripción del dominio:_** Usaremos una colección  de  aproximadamente [20 mil  tweets  de  Twitter] (https://onedrive.live.com/?cid=0c2923df9f1f816f&id=C2923DF9F1F816F%2150804&ithint=folder&authkey=!ANNEKv7tNdlSSQk). En donde el diccionario de términos se construyó usando el contenido del atributo “text”, y el el Id del tweet.  Existen más de 10 mil registros y por cada uno tenemos la siguiente información:
+**_Descripción del dominio:_** Usaremos una colección  de  aproximadamente [20 mil  tweets  de  Twitter](https://onedrive.live.com/?cid=0c2923df9f1f816f&id=C2923DF9F1F816F%2150804&ithint=folder&authkey=!ANNEKv7tNdlSSQk). En donde el diccionario de términos se construyó usando el contenido del atributo “text”, y el el Id del tweet.  Existen más de 10 mil registros y por cada uno tenemos la siguiente información:
 
 - **Id**: Número de identificación del id.
 - **Date**:  Fecha de de publicación del tweet.
