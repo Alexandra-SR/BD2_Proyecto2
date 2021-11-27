@@ -17,7 +17,7 @@
 
 ## Introducción :dart:
 
-**_Objetivo:_** Implementar dos técnicas de organización de archivos que almacenen la información y permitan el manejo de los registros de manera eficaz. En este caso, nos permitirá encontrar los precios de venta y las características de determinados autos usados. Para lograr esto implementaremos _Sequential File y Extentible Hashing_.
+**_Objetivo:_**  Entender y aplicar los algoritmos de búsqueda y recuperación de información basado en el contenido. En este proyecto nos enfocaremos en la construcción óptima de un _Índice Invertido_. En este caso usaremos un dataset de tweets, que nos permitirá encontrar los tweets más relevantes dado un término de búsqueda. 
 
 **_Descripción del dominio:_** Usaremos una base de datos que cuenta con la información de [carros usados de la marca Audi](https://www.kaggle.com/mysarahmadbhat/audi-used-car-listings). Existen más de 10 mil registros y por cada uno tenemos la siguiente información:
 
@@ -43,6 +43,23 @@
 
 
 ## Descripción de las técnicas 
+
+- **Preprocesamiento:** 
+  o Tokenization 
+  o Filtrar Stopwords 
+  o Reducción de palabras (Stemming) 
+- **Construcción del Índice**
+  o Estructurar el índice invertido para guardar los pesos TF-IDF.  
+  o Calcular  una  sola  vez  la  longitud  de  cada  documento  (norma)  y  guardarlo  para  ser 
+  utilizado al momento de aplicar la similitud de coseno. 
+  o Construcción del índice en memoria secundaria para grandes colecciones de datos.   
+- **Consulta** 
+  o La consulta es una frase en lenguaje natural.  
+  o El scoring se obtiene aplicando la similitud de coseno sobre el índice invertido en 
+  memoria secundaria. 
+  o La función de recuperac
+  ión debe retornar una lista ordenada de documentos que se 
+  aproximen a la consulta. 
 
 ###  SEQUENTIAL FILE  💯
 
