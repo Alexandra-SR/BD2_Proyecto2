@@ -193,4 +193,6 @@ Probar  el  desempeño  del  índice  invertido,  mediante una plataforma web (f
 
 * [Video](https://drive.google.com/drive/folders/120QQzzBZWRGeH2MJdfYNc15avekUYLPz?usp=sharing) 
 
+## Licencia 📄
+Universidad de Ingenieria y Tecnología - UTEC
   
