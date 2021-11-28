@@ -178,6 +178,16 @@ Probar  el  desempeño  del  índice  invertido,  mediante una plataforma web (f
     return orderedDic[:k]
     ```
 
+###  Vistas de plataforma web 
+**Buscador **
+<figure class="image" align="center">
+  <img src="images/buscador.png" width="70%" height="60%" style="text-align:center;">
+</figure>
+
+**Resultados **
+<figure class="image" align="center">
+  <img src="images/resultados.png" width="70%" height="60%" style="text-align:center;">
+</figure>
 
 ## Evidencias 🚀
 
