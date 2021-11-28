@@ -183,6 +183,12 @@
   min-height: unset;
 }
 
+button.btn.btn-primary{
+  background: rgb(84, 105, 212);
+
+}
+
+
   button[type="button"] {
       background-color: rgb(84, 105, 212);
       box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, 
